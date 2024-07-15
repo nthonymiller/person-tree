@@ -5,11 +5,12 @@ namespace TestProject1;
 public class UnitTest1
 {
 	[Theory]
-	[InlineData(new[] { "Harry:Ron", "Ron:Ginny", "Ginny:Fran" }, "Harry", "Fran", 2)]
-	[InlineData(new[] { "Harry:Ron", "Ron:Ginny", "Ginny:Donald", "Ginny:Fran" }, "Harry", "Fran", 2)]
-	[InlineData(new[] { "Harry:Ron", "Ron:Sam", "Ron:Sally", "Ron:Ginny", "Ginny:Donald", "Ginny:Fran" }, "Harry", "Fran", 2)]
-	[InlineData(new[] { "Harry:Ron", "Ron:Sam", "Ron:Sally", "Ron:Ginny", "Sally:Helen", "Ginny:Donald", "Ginny:Fran" }, "Harry", "Helen", 2)]
-	[InlineData(new[] { "Harry:Ron", "Ron:Ginny", "Ginny:Fran" }, "Ron", "Fran", 1)]
+	[InlineData(new[] { "Harry:Ron", "Ron:Ginny", "Ginny:Fran" }, "Harry", "Fran", 3)]
+	[InlineData(new[] { "Harry:Ron", "Ron:Ginny", "Ginny:Donald", "Ginny:Fran" }, "Harry", "Fran", 3)]
+	[InlineData(new[] { "Harry:Ron", "Ron:Sam", "Ron:Sally", "Ron:Ginny", "Ginny:Donald", "Ginny:Fran" }, "Harry", "Fran", 3)]
+	[InlineData(new[] { "Harry:Ron", "Ron:Sam", "Ron:Sally", "Ron:Ginny", "Sally:Helen", "Ginny:Donald", "Ginny:Fran" }, "Harry", "Helen", 3)]
+	[InlineData(new[] { "Harry:Ron", "Ron:Sam", "Ron:Sally", "Ron:Ginny", "Sally:Helen", "Ginny:Donald", "Ginny:Fran" }, "Ron", "Fran", 2)]
+	[InlineData(new[] { "Harry:Ron", "Ron:Ginny", "Ginny:Fran" }, "Ron", "Fran", 2)]
 	public void Test1(string[] names, string name1, string name2, int expected)
 	{
 		var tree = PersonTreeBuilder.BuildTree(names);
@@ -62,7 +63,7 @@ public static class PersonTreeBuilder
 
 		var (found, count) = Traverse(person, name2);
 		
-		return found ? count - 1 : 0;
+		return found ? count : 0;
 	}
 
 	private static (bool, int) Traverse(Person person, string name)
